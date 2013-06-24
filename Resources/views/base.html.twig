@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}{{ sitename }}{% endblock %}</title>
+{% block stylesheets %}
+{% stylesheets filter='lessphp,?yui_css'
+  '@BsBootstrapifyBundle/Resources/less/bootstrap-fa-s2.less'
+%}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+{% endstylesheets %}
+{% endblock %}
+{% block javascripts %}
+{% javascripts filter='?yui_js'
+  '@BsBootstrapifyBundle/Resources/js/jquery.js'
+  '@BsBootstrapifyBundle/Resources/js/bootstrap.js'
+  '@BsBootstrapifyBundle/Resources/js/select2.js'
+%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/bsbootstrapify/js/locale/select2_locale_' ~ locale ~ '.js') }}"></script>
+{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  </head>
+  <body{% block body_attributes %}{% endblock %}>
+    {% block body %}{% endblock %}
+  </body>
+</html>
