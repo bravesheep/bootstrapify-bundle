@@ -35,7 +35,11 @@
         {% if label is empty %}
             {% set label = name|humanize %}
         {% endif %}
-        {% set attr = {'class': 'control-label'}|merge(attr) %}
+        {% if label_attr.class is defined %}
+        {% set label_attr = label_attr|merge({'class': 'control-label ' ~ label_attr.class}) %}
+        {% else %}
+        {% set label_attr = {'class': 'control-label'}|merge(label_attr) %}
+        {% endif %}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
           {{ label|trans({}, translation_domain) }}
           {% if required %}
