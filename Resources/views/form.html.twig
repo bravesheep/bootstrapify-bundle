@@ -66,7 +66,7 @@
 
 {% block textarea_widget %}
 {% spaceless %}
-  {% set attr = attr|merge({'rows': 6, 'cols': 60, 'class': 'input-xxlarge'}) %}
+  {% set attr = {'rows': 6, 'cols': 60, 'class': 'input-xxlarge'}|merge(attr) %}
   <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
 {% endspaceless %}
 {% endblock textarea_widget %}
