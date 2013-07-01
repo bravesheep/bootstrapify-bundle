@@ -1,4 +1,5 @@
 {% block form_rows %}
+{% spaceless %}
   {% if errors|length > 0 %}
   <div class="alert alert-error">
     {{ form_errors(form) }}
@@ -7,9 +8,11 @@
   {% for child in form %}
     {{ form_row(child) }}
   {% endfor %}
+{% endspaceless %}
 {% endblock %}
 
 {% block form_row %}
+{% spaceless %}
 <div class="control-group{{ errors|length > 0 ? ' error' }}">
   {{ form_label(form) }}
   <div class="controls">
@@ -17,19 +20,31 @@
     {{ form_errors(form) }}
   </div>
 </div>
+{% endspaceless %}
 {% endblock %}
 
 {% block form_label %}
-  {% if label is empty %}
-    {% set label = name|humanize %}
-  {% endif %}
-  <label class="control-label" for="{{ id }}">
-    {{ label|trans }}
-    {% if required %}
-      <span class="text-error" title="{{ 'Required field'|trans }}">*</span>
+{% spaceless %}
+    {% if label is not sameas(false) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        {% set attr = {'class': 'control-label'}|merge(attr) %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+          {{ label|trans({}, translation_domain) }}
+          {% if required %}
+            <span class="text-error" title="{{ 'Required field'|trans }}">*</span>
+          {% endif %}
+        </label>
     {% endif %}
-  </label>
-{% endblock %}
+{% endspaceless %}
+{% endblock form_label %}
 
 {% block form_errors %}
 {% spaceless %}
@@ -50,7 +65,7 @@
 {% block date_widget %}
 {% spaceless %}
   {% if widget == 'single_text' %}
-    {% set attr = attr|merge({'class': 'datepicker'}) %}
+    {% set attr = {'class': 'datepicker'}|merge(attr) %}
     {{ block('form_widget_simple') }}
   {% else %}
     <div {{ block('widget_container_attributes') }}>
