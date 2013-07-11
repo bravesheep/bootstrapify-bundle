@@ -1,5 +1,20 @@
 # Bravesheep Bootstrapify bundle
 
+## Installation
+
+Add the BsBootstrapifyBundle to assetic and define a global Twig variable named *locale*:
+
+```yml
+
+assetic:
+    bundles:
+        - BsBootstrapifyBundle
+
+twig:
+    globals:
+        locale: "%locale%"
+```
+
 To include the Bootstrap Datepicker add the following to your layout:
 
 ```twig
