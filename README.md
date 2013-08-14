@@ -13,6 +13,9 @@ assetic:
 twig:
     globals:
         locale: "%locale%"
+    form:
+        resources:
+            - "BsBootstrapifyBundle::form.html.twig"
 ```
 
 To include the Bootstrap Datepicker add the following to your layout:
