@@ -89,3 +89,29 @@
   <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
 {% endspaceless %}
 {% endblock textarea_widget %}
+
+{% block button_row %}
+{% spaceless %}
+    {{ form_widget(form) }}
+{% endspaceless %}
+{% endblock button_row %}
+
+{% block button_widget %}
+{% spaceless %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    {% set default_class = (label == 'Save') ? 'btn btn-primary' : 'btn' %}
+    {% if attr.class is defined %}
+      {% set attr = {'class': default_class ~ ' ' ~ attr.class}|merge(attr) %}
+    {% else %}
+      {% set attr = {'class': default_class}|merge(attr) %}
+    {% endif %}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
+      {% if label|slice(0, 4) == 'Save' %}
+        <span class="icon-save"></span>
+      {% endif %}
+      {{ label|trans({}, translation_domain) }}
+    </button>&nbsp;
+{% endspaceless %}
+{% endblock button_widget %}
