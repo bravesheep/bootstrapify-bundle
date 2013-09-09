@@ -1,9 +1,7 @@
 {% block form_rows %}
 {% spaceless %}
   {% if errors|length > 0 %}
-  <div class="alert alert-error">
     {{ form_errors(form) }}
-  </div>
   {% endif %}
   {% for child in form %}
     {{ form_row(child) }}
@@ -53,11 +51,12 @@
 {% block form_errors %}
 {% spaceless %}
   {% if errors|length > 0 %}
-    <span class="help-block">
+    <div class="alert alert-error">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
       {% for error in errors %}
         {{ error.message }}
       {% endfor %}
-    </span>
+    </div>
   {% elseif help is defined %}
     <span class="help-block">
       {{ help }}
