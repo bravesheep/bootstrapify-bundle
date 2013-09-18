@@ -1,0 +1,11 @@
+parameters:
+    bs_bootstrapify.twig_extension.class: Bs\BootstrapifyBundle\Twig\BootstrapifyExtension
+    bs_bootstrapify.twig_extension.locale_map: {}
+
+services:
+    bs_bootstrapify.twig_extension:
+        class: %bs_bootstrapify.twig_extension.class%
+        arguments: [%bs_bootstrapify.twig_extension.locale_map%]
+        calls:
+            - [setContainer, [@service_container]]
+        tags: [{name: twig.extension}]

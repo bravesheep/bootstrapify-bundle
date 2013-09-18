@@ -39,7 +39,7 @@
 			display: inline-block;
 			border-left:   6px solid transparent;
 			border-right:  6px solid transparent;
-			border-bottom: 6px solid $white;
+			border-bottom: 6px solid $body-bg;
 			border-top:    0;
 			position: absolute;
 		}
@@ -57,7 +57,7 @@
 		&.datepicker-orient-bottom:after {
 			bottom: -6px;
 			border-bottom: 0;
-			border-top:    6px solid $white;
+			border-top:    6px solid $body-bg;
 		}
 	}
 	>div {
@@ -154,7 +154,7 @@
 		&.active:hover,
 		&.active.disabled,
 		&.active.disabled:hover {
-			@include gradient-vertical($btn-primary-background, adjust-hue($btn-primary-background, 20));
+			@include gradient-vertical($btn-primary-bg, adjust-hue($btn-primary-bg, 20));
 			color: #fff;
 			text-shadow: 0 -1px 0 rgba(0,0,0,.25);
 		}
@@ -180,7 +180,7 @@
 			&.active:hover,
 			&.active.disabled,
 			&.active.disabled:hover {
-				@include gradient-vertical($btn-primary-background, adjust-hue($btn-primary-background, 20));
+				@include gradient-vertical($btn-primary-bg, adjust-hue($btn-primary-bg, 20));
 				color: #fff;
 				text-shadow: 0 -1px 0 rgba(0,0,0,.25);
 			}
@@ -248,7 +248,7 @@
 		font-weight: normal;
 		line-height: $line-height-base;
 		text-align: center;
-		text-shadow: 0 1px 0 $white;
+		text-shadow: 0 1px 0 $body-bg;
 		vertical-align: middle;
 		background-color: $gray-lighter;
 		border: 1px solid #ccc;

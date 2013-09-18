@@ -230,12 +230,12 @@ dsed "Resources/scss/select2/select2.scss" "s/url('/url('#{\$select2-resource-pa
 
 bsdp_scss="Resources/scss/bootstrap-datepicker/datepicker.scss"
 
-dsed "${bsdp_scss}" "s/@white/\$white/g"
+dsed "${bsdp_scss}" "s/@white/\$body-bg/g"
 dsed "${bsdp_scss}" "s/@grayLighter/\$gray-lighter/g"
 dsed "${bsdp_scss}" "s/@grayLight/\$gray-light/g"
 dsed "${bsdp_scss}" "s/@todayBackground/\$today-background/g"
 dsed "${bsdp_scss}" "s/@orange/\$brand-warning/g"
-dsed "${bsdp_scss}" "s/@btnPrimaryBackground/\$btn-primary-background/g"
+dsed "${bsdp_scss}" "s/@btnPrimaryBackground/\$btn-primary-bg/g"
 dsed "${bsdp_scss}" "s/@baseLineHeight/\$line-height-base/g"
 dsed "${bsdp_scss}" "s/\.buttonBackground/@include gradient-vertical/"
 dsed "${bsdp_scss}" "s/\.border-radius(\([^)]*\))/border-radius: \1/"
