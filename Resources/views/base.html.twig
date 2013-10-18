@@ -3,23 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <title>{% block title %}{{ sitename }}{% endblock %}</title>
-{% block stylesheets %}
-{% stylesheets filter='lessphp,?yui_css'
-  '@BsBootstrapifyBundle/Resources/less/bootstrap-fa-s2.less'
-%}
-    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
-{% endstylesheets %}
-{% endblock %}
-{% block javascripts %}
-{% javascripts filter='?yui_js'
-  '@BsBootstrapifyBundle/Resources/js/jquery.js'
-  '@BsBootstrapifyBundle/Resources/js/bootstrap.js'
-  '@BsBootstrapifyBundle/Resources/js/select2.js'
-%}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-    <script type="text/javascript" src="{{ asset('bundles/bsbootstrapify/js/locale/select2/' ~ locale ~ '.js') }}"></script>
-{% endblock %}
+
+    {% block stylesheets %}
+      {% stylesheets filter='?yui_css'
+        '@BsBootstrapifyBundle/Resources/scss/bootstrap-fa-s2-th.scss'
+      %}
+      <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+    {% endstylesheets %}
+    {% endblock %}
+
+    {% block javascripts %}
+      {% javascripts filter='?yui_js'
+        '@BsBootstrapifyBundle/Resources/js/jquery.js'
+        '@BsBootstrapifyBundle/Resources/js/bootstrap.js'
+        '@BsBootstrapifyBundle/Resources/js/select2.js'
+      %}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% endblock %}
+
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
   </head>
   <body{% block body_attributes %}{% endblock %}>

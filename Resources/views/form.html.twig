@@ -93,7 +93,7 @@
 {% block date_widget %}
 {% spaceless %}
   {% if widget == 'single_text' %}
-    {% set attr = {'class': 'datepicker'}|merge(attr) %}
+    {% set attr = {'class': 'datepicker form-control'}|merge(attr) %}
     {{ block('form_widget_simple') }}
   {% else %}
     <div {{ block('widget_container_attributes') }}>
@@ -125,7 +125,7 @@
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
-    {% set default_class = (label == 'Save') ? 'btn btn-primary' : 'btn' %}
+    {% set default_class = (label == 'Save') ? 'btn btn-primary' : 'btn btn-default' %}
     {% if attr.class is defined %}
       {% set attr = {'class': default_class ~ ' ' ~ attr.class}|merge(attr) %}
     {% else %}
