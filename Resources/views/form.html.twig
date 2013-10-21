@@ -19,18 +19,6 @@
 {% endspaceless %}
 {% endblock %}
 
-{% block widget_attributes %}
-{% spaceless %}
-    id="{{ id }}" name="{{ full_name }}"{% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}{% if max_length %} maxlength="{{ max_length }}"{% endif %}{% if pattern %} pattern="{{ pattern }}"{% endif %}
-    {% if attr.class is defined %}
-      {% set attr = {'class': 'form-control' ~ ' ' ~ attr.class}|merge(attr) %}
-    {% else %}
-      {% set attr = {'class': 'form-control'}|merge(attr) %}
-    {% endif %}
-    {% for attrname, attrvalue in attr %}{% if attrname in ['placeholder', 'title'] %}{{ attrname }}="{{ attrvalue|trans({}, translation_domain) }}" {% else %}{{ attrname }}="{{ attrvalue }}" {% endif %}{% endfor %}
-{% endspaceless %}
-{% endblock widget_attributes %}
-
 {% block form_label %}
 {% spaceless %}
     {% if label is not sameas(false) %}
@@ -61,11 +49,7 @@
     {% else %}
         {% set form_method = "POST" %}
     {% endif %}
-    {% if attr.class is defined %}
-      {% set attr = {'class': 'form' ~ ' ' ~ attr.class}|merge(attr) %}
-    {% else %}
-      {% set attr = {'class': 'form'}|merge(attr) %}
-    {% endif %}
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' form'}) %}
     <form method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
     {% if form_method != method %}
         <input type="hidden" name="_method" value="{{ method }}" />
@@ -93,7 +77,7 @@
 {% block date_widget %}
 {% spaceless %}
   {% if widget == 'single_text' %}
-    {% set attr = {'class': 'datepicker form-control'}|merge(attr) %}
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' datepicker form-control'}) %}
     {{ block('form_widget_simple') }}
   {% else %}
     <div {{ block('widget_container_attributes') }}>
@@ -107,12 +91,58 @@
 {% endspaceless %}
 {% endblock date_widget %}
 
+{% block choice_widget %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
+{% spaceless %}
+    {% if expanded %}
+        {{ block('choice_widget_expanded') }}
+    {% else %}
+        {{ block('choice_widget_collapsed') }}
+    {% endif %}
+{% endspaceless %}
+{% endblock choice_widget %}
+
+{% block form_widget_simple %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
 {% block textarea_widget %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
 {% spaceless %}
   {% set attr = {'rows': 6, 'cols': 60}|merge(attr) %}
   <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
 {% endspaceless %}
 {% endblock textarea_widget %}
+
+{% block checkbox_row %}
+{% spaceless %}
+  <div class="checkbox">
+    {{ form_label(form) }}
+    {{ form_errors(form) }}
+  </div>
+{% endspaceless %}
+{% endblock checkbox_row %}
+
+{% block checkbox_label %}
+{% if label is not sameas(false) %}
+    {% if not compound %}
+        {% set label_attr = label_attr|merge({'for': id}) %}
+    {% endif %}
+    {% if required %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+    {% endif %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{ form_widget(form) }} {{ label|trans({}, translation_domain) }}
+    </label>
+{% endif %}
+{% endblock checkbox_label %}
 
 {% block button_row %}
 {% spaceless %}
