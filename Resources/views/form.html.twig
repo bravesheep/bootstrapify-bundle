@@ -11,7 +11,7 @@
 
 {% block form_row %}
 {% spaceless %}
-<div class="form-group{{ errors|length > 0 ? ' error' }}">
+<div class="form-group{{ errors|length > 0 ? '  has-error' }}">
   {{ form_label(form) }}
   {{ form_widget(form) }}
   {{ form_errors(form) }}
@@ -60,12 +60,11 @@
 {% block form_errors %}
 {% spaceless %}
   {% if errors|length > 0 %}
-    <div class="alert alert-error">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <p class="help-block text-danger">
       {% for error in errors %}
-        {{ error.message }}
+        <span class="icon-bell"></span> {{ error.message }}<br>
       {% endfor %}
-    </div>
+    </p>
   {% elseif help is defined %}
     <p class="help-block">
       {{ help }}
@@ -92,15 +91,44 @@
 {% endblock date_widget %}
 
 {% block choice_widget %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
 {% spaceless %}
     {% if expanded %}
         {{ block('choice_widget_expanded') }}
     {% else %}
+      {% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
         {{ block('choice_widget_collapsed') }}
     {% endif %}
 {% endspaceless %}
 {% endblock choice_widget %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }}>
+    {% for child in form %}
+      <div class="radio">
+        {{ form_label(child) }}
+      </div>
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block radio_label %}
+{% if label is not sameas(false) %}
+    {% if not compound %}
+        {% set label_attr = label_attr|merge({'for': id}) %}
+    {% endif %}
+    {% if required %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+    {% endif %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{ form_widget(form) }} {{ label|trans({}, translation_domain) }}
+    </label>
+{% endif %}
+{% endblock radio_label %}
 
 {% block form_widget_simple %}
 {% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
