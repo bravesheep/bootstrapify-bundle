@@ -7,7 +7,7 @@ JQUERY_VERSION='1.10.2'
 JQUERY_MIGRATE_VERSION='1.2.1'
 
 # Twitter Bootstrap version
-TWBS_VERSION='3.0.2'
+TWBS_VERSION='3.0.0'
 
 # Font-awesome version
 FA_VERSION='4.0.3'
@@ -199,7 +199,7 @@ ddl "${BSDP_URL}" "${BSDP_OUT}"
 dtarx "${BSDP_OUT}"
 
 dmkdir "Resources/less/bootstrap-datepicker"
-dmv "${BSDP_DIR}less/datepicker.less" "Resources/less/bootstrap-datepicker/"
+dmv "${BSDP_DIR}less/datepicker3.less" "Resources/less/bootstrap-datepicker/datepicker.less"
 
 dmkdir "Resources/js"
 dmv "${BSDP_DIR}js/bootstrap-datepicker.js" "Resources/js/"
