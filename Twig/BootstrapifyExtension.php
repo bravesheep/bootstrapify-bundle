@@ -39,11 +39,6 @@ class BootstrapifyExtension extends Twig_Extension implements ContainerAwareInte
     {
         return [
             new Twig_SimpleFunction(
-                'bootstrapify_select2_locale',
-                [$this, 'insertSelect2Locale'],
-                ['is_safe' => ['html']]
-            ),
-            new Twig_SimpleFunction(
                 'bootstrapify_datepicker_locale',
                 [$this, 'insertDatepickerLocale'],
                 ['is_safe' => ['html']]
@@ -62,17 +57,6 @@ class BootstrapifyExtension extends Twig_Extension implements ContainerAwareInte
             $locale = $this->locale_map[$locale];
         }
         return $locale;
-    }
-
-    /**
-     * Create a script tag for loading the active locale for select2.
-     * @return string
-     */
-    public function insertSelect2Locale()
-    {
-        $locale = $this->getLocale();
-        $url = '/bundles/bsbootstrapify/js/locale/select2/select2_locale_' . $locale . '.js';
-        return '<script src="' . $url . '" type="text/javascript"></script>';
     }
 
     /**

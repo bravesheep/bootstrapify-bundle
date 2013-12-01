@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
+    {% block meta %}
+      <meta charset="UTF-8">
+    {% endblock %}
     <title>{% block title %}{{ sitename }}{% endblock %}</title>
 
     {% block stylesheets %}
       {% stylesheets filter='?yui_css'
-        '@BsBootstrapifyBundle/Resources/scss/bootstrap-fa-s2-th.scss'
+        '@BsBootstrapifyBundle/Resources/less/bootstrap-all.less'
       %}
-      <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
-    {% endstylesheets %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+      {% endstylesheets %}
     {% endblock %}
 
     {% block javascripts %}
       {% javascripts filter='?yui_js'
         '@BsBootstrapifyBundle/Resources/js/jquery.js'
         '@BsBootstrapifyBundle/Resources/js/bootstrap.js'
-        '@BsBootstrapifyBundle/Resources/js/select2.js'
+        '@BsBootstrapifyBundle/Resources/js/bootstrap-datepicker.js'
+        '@BsBootstrapifyBundle/Resources/js/selectize.js'
       %}
-      <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+      {% endjavascripts %}
+      {{ bootstrapify_datepicker_locale() }}
     {% endblock %}
-
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
   </head>
   <body{% block body_attributes %}{% endblock %}>
     {% block body %}{% endblock %}

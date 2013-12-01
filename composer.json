@@ -9,10 +9,16 @@
         {
             "name": "Marlon Baeten",
             "email": "marlon@bravesheep.nl"
+        },
+        {
+            "name": "Ruben Nijveld",
+            "email": "ruben@bravesheep.nl"
         }
     ],
     "autoload": {
-        "psr-0": { "Bs\\BootstrapifyBundle\\": [""] }
+        "psr-0": {
+            "Bs\\BootstrapifyBundle\\": ""
+        }
     },
     "target-dir": "Bs/BootstrapifyBundle"
 }

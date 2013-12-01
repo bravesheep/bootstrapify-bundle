@@ -7,16 +7,13 @@ JQUERY_VERSION='1.10.2'
 JQUERY_MIGRATE_VERSION='1.2.1'
 
 # Twitter Bootstrap version
-TWBS_VERSION='3.0.0'
+TWBS_VERSION='3.0.2'
 
 # Font-awesome version
-FA_VERSION='3.2.1'
+FA_VERSION='4.0.3'
 
-# Select2 version
-SELECT2_VERSION='3.4.2'
-
-# Select2-bootstrap layout version
-SELECT2_BS_VERSION='master'
+# Selectize.js version
+SELECTIZE_VERSION='0.8.5'
 
 # Bootstrap datepicker version
 BSDP_VERSION='master'
@@ -123,9 +120,9 @@ dsed() {
 logmsg "Starting..."
 
 ## Twitter bootstrap
-TWBS_URL="https://github.com/jlong/sass-bootstrap/archive/v${TWBS_VERSION}.tar.gz"
+TWBS_URL="https://github.com/twbs/bootstrap/archive/v${TWBS_VERSION}.tar.gz"
 TWBS_OUT="twbs-${TWBS_VERSION}.tgz"
-TWBS_DIR="sass-bootstrap-${TWBS_VERSION}/"
+TWBS_DIR="bootstrap-${TWBS_VERSION}/"
 
 ddl "${TWBS_URL}" "${TWBS_OUT}"
 dtarx "${TWBS_OUT}"
@@ -141,9 +138,9 @@ for f in ${TWBS_DIR}dist/fonts/*; do
     dmv "${f}" "Resources/public/fonts/"
 done
 
-dmkdir "Resources/scss/bootstrap"
-for f in ${TWBS_DIR}lib/*.scss; do
-    dmv "${f}" "Resources/scss/bootstrap/"
+dmkdir "Resources/less/bootstrap"
+for f in ${TWBS_DIR}less/*.less; do
+    dmv "${f}" "Resources/less/bootstrap/"
 done
 
 ### Font awesome
@@ -154,14 +151,14 @@ FA_DIR="Font-Awesome-${FA_VERSION}/"
 ddl "${FA_URL}" "${FA_OUT}"
 dtarx "${FA_OUT}"
 
-dmkdir "Resources/public/font"
-for f in ${FA_DIR}font/*; do
-    dmv "${f}" "Resources/public/font/"
+dmkdir "Resources/public/fonts"
+for f in ${FA_DIR}fonts/*; do
+    dmv "${f}" "Resources/public/fonts/"
 done
 
-dmkdir "Resources/scss/font-awesome"
-for f in ${FA_DIR}scss/*.scss; do
-    dmv "${f}" "Resources/scss/font-awesome/"
+dmkdir "Resources/less/font-awesome"
+for f in ${FA_DIR}less/*.less; do
+    dmv "${f}" "Resources/less/font-awesome/"
 done
 
 ### jQuery and jQuery migrate
@@ -172,40 +169,26 @@ dmkdir "Resources/js"
 ddl "${JQUERY_URL}" "Resources/js/jquery.js" true
 ddl "${JQUERY_MIGRATE_URL}" "Resources/js/jquery-migrate.js" true
 
-### Select2
-SELECT2_URL="https://github.com/ivaynberg/select2/archive/${SELECT2_VERSION}.tar.gz"
-SELECT2_OUT="select2-${SELECT2_VERSION}.tgz"
-SELECT2_DIR="select2-${SELECT2_VERSION}/"
+#### Selectize.js
+SELECTIZE_URL="https://github.com/brianreavis/selectize.js/archive/v${SELECTIZE_VERSION}.tar.gz"
+SELECTIZE_OUT="selectize.js-${SELECTIZE_VERSION}.tgz"
+SELECTIZE_DIR="selectize.js-${SELECTIZE_VERSION}/"
 
-ddl "${SELECT2_URL}" "${SELECT2_OUT}"
-dtarx "${SELECT2_OUT}"
+ddl "${SELECTIZE_URL}" "${SELECTIZE_OUT}"
+dtarx "${SELECTIZE_OUT}"
 
 dmkdir "Resources/js"
-dmv "${SELECT2_DIR}select2.js" "Resources/js/"
+dmv "${SELECTIZE_DIR}dist/js/standalone/selectize.js" "Resources/js/"
 
-dmkdir "Resources/scss/select2"
-dmv "${SELECT2_DIR}select2.css" "Resources/scss/select2/select2.scss"
-
-dmkdir "Resources/public/img"
-dmv "${SELECT2_DIR}select2.png" "Resources/public/img/"
-dmv "${SELECT2_DIR}select2x2.png" "Resources/public/img/"
-dmv "${SELECT2_DIR}select2-spinner.gif" "Resources/public/img/"
-
-dmkdir "Resources/public/js/locale/select2"
-for f in ${SELECT2_DIR}select2_locale_*.js; do
-    dmv "${f}" "Resources/public/js/locale/select2/"
+dmkdir "Resources/less/selectize.js"
+for f in ${SELECTIZE_DIR}dist/less/*.less; do
+    dmv "${f}" "Resources/less/selectize.js/"
 done
 
-### Select2-bootstrap
-SELECT2_BS_URL="https://github.com/fk/select2-bootstrap-css/archive/${SELECT2_BS_VERSION}.tar.gz"
-SELECT2_BS_OUT="select2-bootstrap-css-${SELECT2_BS_VERSION}.tgz"
-SELECT2_BS_DIR="select2-bootstrap-css-${SELECT2_BS_VERSION}/"
-
-ddl "${SELECT2_BS_URL}" "${SELECT2_BS_OUT}"
-dtarx "${SELECT2_BS_OUT}"
-
-dmkdir "Resources/scss/select2"
-dmv "${SELECT2_BS_DIR}lib/select2-bootstrap.scss" "Resources/scss/select2/"
+dmkdir "Resources/less/selectize.js/plugins"
+for f in ${SELECTIZE_DIR}dist/less/plugins/*.less; do
+    dmv "${f}" "Resources/less/selectize.js/plugins/"
+done
 
 ## Bootstrap datepicker plugin
 BSDP_URL="https://github.com/eternicode/bootstrap-datepicker/archive/${BSDP_VERSION}.tar.gz"
@@ -215,8 +198,8 @@ BSDP_DIR="bootstrap-datepicker-${BSDP_VERSION}/"
 ddl "${BSDP_URL}" "${BSDP_OUT}"
 dtarx "${BSDP_OUT}"
 
-dmkdir "Resources/scss/bootstrap-datepicker"
-dmv "${BSDP_DIR}less/datepicker.less" "Resources/scss/bootstrap-datepicker/datepicker.scss"
+dmkdir "Resources/less/bootstrap-datepicker"
+dmv "${BSDP_DIR}less/datepicker.less" "Resources/less/bootstrap-datepicker/"
 
 dmkdir "Resources/js"
 dmv "${BSDP_DIR}js/bootstrap-datepicker.js" "Resources/js/"
@@ -226,34 +209,15 @@ for f in ${BSDP_DIR}js/locales/bootstrap-datepicker.*.js; do
     dmv "${f}" "Resources/public/js/locale/bootstrap-datepicker/"
 done
 
-dsed "Resources/scss/select2/select2.scss" "s/url('/url('#{\$select2-resource-path}/"
-
-bsdp_scss="Resources/scss/bootstrap-datepicker/datepicker.scss"
-
-dsed "${bsdp_scss}" "s/@white/\$body-bg/g"
-dsed "${bsdp_scss}" "s/@grayLighter/\$gray-lighter/g"
-dsed "${bsdp_scss}" "s/@grayLight/\$gray-light/g"
-dsed "${bsdp_scss}" "s/@todayBackground/\$today-background/g"
-dsed "${bsdp_scss}" "s/@orange/\$brand-warning/g"
-dsed "${bsdp_scss}" "s/@btnPrimaryBackground/\$btn-primary-bg/g"
-dsed "${bsdp_scss}" "s/@baseLineHeight/\$line-height-base/g"
-dsed "${bsdp_scss}" "s/\.buttonBackground/@include gradient-vertical/"
-dsed "${bsdp_scss}" "s/\.border-radius(\([^)]*\))/border-radius: \1/"
-dsed "${bsdp_scss}" "s/spin(/adjust-hue(/"
-dsed "${bsdp_scss}" "s/&&-/.datepicker.datepicker-/"
-dsed "${bsdp_scss}" "s/&-/.datepicker-/"
-
 ## Cleanup
 drm "${TWBS_DIR}"
 drm "${FA_DIR}"
-drm "${SELECT2_DIR}"
-drm "${SELECT2_BS_DIR}"
+drm "${SELECTIZE_DIR}"
 drm "${BSDP_DIR}"
 
 drm "${TWBS_OUT}"
 drm "${FA_OUT}"
-drm "${SELECT2_OUT}"
-drm "${SELECT2_BS_OUT}"
+drm "${SELECTIZE_OUT}"
 drm "${BSDP_OUT}"
 
 logmsg "Done"
