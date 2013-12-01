@@ -15,6 +15,11 @@
     {% endblock %}
 
     {% block javascripts %}
+      <!--[if lt IE 9]>
+      <script src="{{ asset('bundles/bsbootstrapify/js/html5shiv.js') }}"></script>
+      <script src="{{ asset('bundles/bsbootstrapify/js/respond.min.js') }}"></script>
+      <script src="{{ asset('bundles/bsbootstrapify/js/es5-shiv.min.js') }}"></script>
+      <![endif]-->
       {% javascripts filter='?yui_js'
         '@BsBootstrapifyBundle/Resources/js/jquery.js'
         '@BsBootstrapifyBundle/Resources/js/bootstrap.js'

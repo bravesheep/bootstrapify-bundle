@@ -66,8 +66,13 @@ class BootstrapifyExtension extends Twig_Extension implements ContainerAwareInte
     public function insertDatepickerLocale()
     {
         $locale = $this->getLocale();
-        $url = '/bundles/bsbootstrapify/js/locale/bootstrap-datepicker/bootstrap-datepicker.' . $locale . '.js';
-        return '<script src="' . $url . '" type="text/javascript"></script>';
+        if ($locale) {
+            $url = '/bundles/bsbootstrapify/js/locale/bootstrap-datepicker/bootstrap-datepicker.' . $locale . '.js';
+            return '<script src="' . $url . '" type="text/javascript"></script>';
+        } else {
+            // no locale file to provide
+            return '';
+        }
     }
 
     /**

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+## Main library versions
+
 # jQuery version
 JQUERY_VERSION='1.10.2'
 
@@ -17,6 +19,17 @@ SELECTIZE_VERSION='0.8.5'
 
 # Bootstrap datepicker version
 BSDP_VERSION='master'
+
+## These libraries are for IE8 compatibility
+
+# HTML5Shiv version
+HTML5SHIV_VERSION='3.7.0'
+
+# Respond.js version
+RESPONDJS_VERSION='1.3.0'
+
+# Ecmascript5 shim
+ES5SHIM_VERSION='2.1.0'
 
 ## Functions and helpers
 # Color codes, NC is reset
@@ -209,15 +222,56 @@ for f in ${BSDP_DIR}js/locales/bootstrap-datepicker.*.js; do
     dmv "${f}" "Resources/public/js/locale/bootstrap-datepicker/"
 done
 
+
+## Compatibility libraries
+# Html5shiv
+HTML5SHIV_URL="https://github.com/aFarkas/html5shiv/archive/${HTML5SHIV_VERSION}.tar.gz"
+HTML5SHIV_OUT="html5shiv-${HTML5SHIV_VERSION}.tgz"
+HTML5SHIV_DIR="html5shiv-${HTML5SHIV_VERSION}/"
+
+ddl "${HTML5SHIV_URL}" "${HTML5SHIV_OUT}"
+dtarx "${HTML5SHIV_OUT}"
+
+dmkdir "Resources/public/js"
+dmv "${HTML5SHIV_DIR}dist/html5shiv.js" "Resources/public/js/"
+
+# ES5shim
+ES5SHIM_URL="https://github.com/kriskowal/es5-shim/archive/v${ES5SHIM_VERSION}.tar.gz"
+ES5SHIM_OUT="es5-shim-${ES5SHIM_VERSION}.tgz"
+ES5SHIM_DIR="es5-shim-${ES5SHIM_VERSION}/"
+
+ddl "${ES5SHIM_URL}" "${ES5SHIM_OUT}"
+dtarx "${ES5SHIM_OUT}"
+
+dmkdir "Resources/public/js"
+dmv "${ES5SHIM_DIR}es5-shim.min.js" "Resources/public/js/"
+
+# Respond
+RESPONDJS_URL="https://github.com/scottjehl/Respond/archive/${RESPONDJS_VERSION}.tar.gz"
+RESPONDJS_OUT="Respond-${RESPONDJS_VERSION}.tgz"
+RESPONDJS_DIR="Respond-${RESPONDJS_VERSION}/"
+
+ddl "${RESPONDJS_URL}" "${RESPONDJS_OUT}"
+dtarx "${RESPONDJS_OUT}"
+
+dmkdir "Resources/public/js"
+dmv "${RESPONDJS_DIR}respond.min.js" "Resources/public/js/"
+
 ## Cleanup
 drm "${TWBS_DIR}"
 drm "${FA_DIR}"
 drm "${SELECTIZE_DIR}"
 drm "${BSDP_DIR}"
+drm "${HTML5SHIV_DIR}"
+drm "${ES5SHIM_DIR}"
+drm "${RESPONDJS_DIR}"
 
 drm "${TWBS_OUT}"
 drm "${FA_OUT}"
 drm "${SELECTIZE_OUT}"
 drm "${BSDP_OUT}"
+drm "${HTML5SHIV_OUT}"
+drm "${ES5SHIM_OUT}"
+drm "${RESPONDJS_OUT}"
 
 logmsg "Done"
