@@ -3,13 +3,13 @@
 ## Main library versions
 
 # jQuery version
-JQUERY_VERSION='1.10.2'
+JQUERY_VERSION='1.11.0'
 
 # jQuery Migrate version
 JQUERY_MIGRATE_VERSION='1.2.1'
 
 # Twitter Bootstrap version
-TWBS_VERSION='3.0.0'
+TWBS_VERSION='3.1.1'
 
 # Font-awesome version
 FA_VERSION='4.0.3'
@@ -26,10 +26,10 @@ BSDP_VERSION='master'
 HTML5SHIV_VERSION='3.7.0'
 
 # Respond.js version
-RESPONDJS_VERSION='1.3.0'
+RESPONDJS_VERSION='1.4.2'
 
 # Ecmascript5 shim
-ES5SHIM_VERSION='2.1.0'
+ES5SHIM_VERSION='2.3.0'
 
 ## Functions and helpers
 # Color codes, NC is reset
@@ -255,7 +255,7 @@ ddl "${RESPONDJS_URL}" "${RESPONDJS_OUT}"
 dtarx "${RESPONDJS_OUT}"
 
 dmkdir "Resources/public/js"
-dmv "${RESPONDJS_DIR}respond.min.js" "Resources/public/js/"
+dmv "${RESPONDJS_DIR}/dest/respond.min.js" "Resources/public/js/"
 
 ## Cleanup
 drm "${TWBS_DIR}"
