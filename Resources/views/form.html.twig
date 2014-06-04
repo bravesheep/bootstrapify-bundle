@@ -67,7 +67,7 @@
     </p>
   {% elseif help is defined %}
     <p class="help-block">
-      {{ help }}
+      {{ help|trans|raw }}
     </p>
   {% endif %}
 {% endspaceless %}
